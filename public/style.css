@@ -1,0 +1,22 @@
+#title {
+    padding: 50px;
+}
+
+.container {
+    height: 100vh;
+}
+
+form {
+    width: 100%;
+}
+
+.table td.fit, 
+.table th.fit {
+    white-space: nowrap;
+    width: 1%;
+}
+
+.table td.mid, 
+.table th.mid {
+    text-align: center;
+}
