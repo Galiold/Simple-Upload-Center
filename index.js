@@ -39,7 +39,7 @@ app.post('/upload', (req, res) => {
         } else {
             let view = {
                 files: req.files.map(elem => {
-                    return { name: elem.originalname, uri: encodeURI(elem.originalname), index: req.files.indexOf(elem) + 1 }
+                    return { index: req.files.indexOf(elem) + 1, name: elem.originalname, uri: encodeURI(elem.originalname), size: (Math.floor(elem.size / 1024)).toString() + ' KB' }
                 })
             }
 
