@@ -12,12 +12,22 @@
 </head>
 
 <body>
-    <div class=" container d-flex align-items-center">
+    <div class="container d-flex flex-column justify-content-center align-items-center">
         <form method="POST" action="/upload" enctype="multipart/form-data">
             <div class="input-group">
                 <input type="file" class="form-control" id="inputGroupFile04" name="multiple-files"
                     aria-describedby="inputGroupFileAddon04" aria-label="Upload" multiple>
                 <button class="btn btn-outline-primary" type="submit" id="inputGroupFileAddon04">Upload</button>
+            </div>
+        </form>
+
+        <h1>or</h1>
+
+        <form method="POST" action="/download">
+            <div class="input-group">
+                <input type="text" class="form-control" id="inputGroupFile04" name="url"
+                    aria-describedby="inputGroupFileAddon04" aria-label="Upload" placeholder="Enter download URL">
+                <button class="btn btn-outline-primary" type="submit" id="inputGroupFileAddon04">Download</button>
             </div>
         </form>
     </div>

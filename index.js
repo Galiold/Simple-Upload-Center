@@ -4,10 +4,16 @@ const path = require('path')
 let Mustache = require('mustache')
 let fs = require('fs')
 const serveIndex = require('serve-index')
+const url = require("url");
+const exec = require('child_process').exec
+const e = require('express')
 
 const app = express()
 const port = process.env.PORT || 3000
 
+
+app.use(express.urlencoded({extended: true}))
+app.use(express.json())
 app.use(express.static(__dirname + '/public'))
 app.use('/uploads', serveIndex(__dirname + '/public/uploads'))
 
@@ -53,4 +59,37 @@ app.post('/upload', (req, res) => {
             })
         }
     })
+})
+
+app.post('/download', (req, res) => {
+    let link = req.body.url
+    var parsed = url.pathToFileURL(link)
+    let fileName = path.basename(parsed.pathname)
+
+    let cmd = `wget -P public/uploads ${link}`
+
+    exec(cmd, (err, serr, sout) => {
+        if (err) {
+            console.log(err)
+            res.status(400).send('Error Occured')
+        } else {
+            console.log(sout);
+
+            let view = {
+                files: [
+                    { index: 1, name: fileName, uri: encodeURI(fileName) }
+                ]
+            }
+
+            fs.readFile('public/result.html', 'utf8', (err, data) => {
+                if (err) {
+                    console.log(err)
+                    res.status(400).send('Error Occured')
+                } else {
+                    res.send(Mustache.render(data, view))
+                }
+            })
+        }
+    })
+
 })
